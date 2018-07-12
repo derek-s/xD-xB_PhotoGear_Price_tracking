@@ -32,3 +32,10 @@ h1.navtitle {
     max-width: 1280px;
     margin: 0 auto;
 }
+.navbar-nav>.active>a {
+    background: none !important;
+}
+.passone{
+    border: 1px solid #ddd;
+    margin: 40px 0 40px 0;
+}
