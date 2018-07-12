@@ -22,3 +22,4 @@ if __name__ == "__main__":
         title = jd_soup.jd_title(product_page)
         price = jd_json_p.jd_json_price(price_result)
         jd_json_p.json_write(id, title, price)
+    jd_json_p.dateJson_write()

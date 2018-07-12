@@ -45,3 +45,10 @@ class json_process():
                 file_json.truncate()
             json.dump(result_json, file_json, ensure_ascii=False)
 
+
+    def dateJson_write(self):
+        with codecs.open("date.json", "w+", encoding="utf-8") as date_json:
+            date = {
+                "update": arrow.now().format("YYYY-MM-DD HH:mm:ss")
+            }
+            json.dump(date, date_json, ensure_ascii=False)
