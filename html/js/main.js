@@ -2,24 +2,34 @@ $(document).ready(function(){
     var bodyfile=[
         "5017011.json","1230455.json"
     ]
-    $.ajax({
-        url: bodyfile[0],
-        type: "get",
-        success: function(data){
-            $("#bodytable").bootstrapTable("load", data["price"])
-            $("#bodyname_d850").text(data["title"])
-            zxtCheart(data, "top_d850")
-        }
-    })
-    $("#bodytable").bootstrapTable({
-        columns:[{
-            title: "日期",
-            field: "date"
-        },{
-            title: "价格",
-            field: "price"
-        }]
-    })
+    for(bx in bodyfile){
+        console.log(bx)
+        $.ajax({
+            url: bodyfile[bx],
+            type: "get",
+            success: function(data){
+                var idname = data['id']
+                trackdata = $("div.trackdata")
+                trackdata.append("<h2 id=bodyname-"+ idname +"></h2>")
+                trackdata.append('<table id=bodytable-'+ idname + ' data-toggle="table" data-height="300"></table>')
+                trackdata.append('<canvas id=top-'+ idname +' width="400" height="100"></canvas>')
+                $("#bodytable-" + idname).bootstrapTable({
+                    columns:[{
+                        title: "日期",
+                        field: "date"
+                    },{
+                        title: "价格",
+                        field: "price"
+                    }]
+                })
+                $("#bodytable-" + idname).bootstrapTable("load", data["price"])
+                $("#bodyname-" + idname).text(data["title"])
+                topname = "top-" + idname
+                zxtCheart(data, topname)
+                trackdata.append("<div class=passone></div>")
+            }
+        })
+    }
 })
 
 function zxtCheart(data, cssselect){
@@ -55,7 +65,7 @@ function zxtCheart(data, cssselect){
             responsive: true,
             title: {
                 display: true,
-                text: data["title"] + '价格走势'
+                text: data["title"] + ' 价格走势'
             },
             tooltips: {
                 mode: 'index',
@@ -69,22 +79,20 @@ function zxtCheart(data, cssselect){
                 xAxes: [{
                     display: true,
                     scaleLabel: {
-                        display: true,
+                        display: false,
                         labelString: '日期'
                     }
                 }],
                 yAxes: [{
                     display: true,
                     scaleLabel: {
-                        display: true,
+                        display: false,
                         labelString: '价格'
                     }
                 }]
             }
         }
     }
-    window.onload = function() {
         var ctx = document.getElementById(cssselect).getContext('2d');
         window.myLine = new Chart(ctx, config);
-    };
 }
