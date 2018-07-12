@@ -1,8 +1,19 @@
 $(document).ready(function(){
     var bodyfile = [
-        "5017011.json","1230455.json"
+        "5017011.json", "1174341.json", "1230455.json"
     ]
     loadjson(bodyfile)
+
+    $.ajax({
+        url: "date.json",
+        type: "get",
+        success: function(data){
+            updatetime = data["update"]
+            $(".lastupdate").text(updatetime)
+            $(".fbupdate-s").text(updatetime)
+        }
+    })
+
     var lensfile = [
         "2056545.json", "572705.json", "109075.json", "767952.json", "1359528.json", "4668073.json"
     ]

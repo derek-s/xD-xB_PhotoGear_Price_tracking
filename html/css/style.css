@@ -23,7 +23,7 @@ h1.navtitle {
 }
 .navright {
     float: left;
-    width: 800px;
+    width: 1025px;
 }
 .navright>ul>li>a {
     padding: 5px;
@@ -45,7 +45,20 @@ h1.navtitle {
 }
 .fbarspan {
     color: #777;
+    display: block;
+    margin: 10px 0;
 }
 .smallinfo {
     margin-left: 10px;
+}
+.navupdate {
+    float: right;
+    color: #fff;
+}
+.update {
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+.footbarupdate {
+    color: #777
 }
