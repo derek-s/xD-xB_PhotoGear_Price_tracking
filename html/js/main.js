@@ -1,11 +1,35 @@
 $(document).ready(function(){
-    var bodyfile=[
+    var bodyfile = [
         "5017011.json","1230455.json"
     ]
-    for(bx in bodyfile){
-        console.log(bx)
+    loadjson(bodyfile)
+    var lensfile = [
+        "2056545.json", "572705.json", "109075.json", "767952.json", "1359528.json", "4668073.json"
+    ]
+
+    $("a.clens").bind("click", function(){
+        $(this).parent().attr("class", "active")
+        $("a.cbody").parent().removeAttr("class")
+        $("div.trackdata").empty()
+        $("h1.h1info").text("镜头价格追踪总览")
+        $("h1.h1info").append('<small class="smallinfo">尼康、腾龙镜头</small>')
+        loadjson(lensfile)
+    })
+    $("a.cbody").bind("click", function(){
+        $(this).parent().attr("class", "active")
+        $("a.clens").parent().removeAttr("class")
+        $("div.trackdata").empty()
+        $("h1.h1info").text("机身价格追踪总览")
+        $("h1.h1info").append('<small class="smallinfo">尼康全画幅机身</small>')
+        loadjson(bodyfile)
+    })
+
+})
+
+function loadjson(filelist) {
+    for(bx in filelist){
         $.ajax({
-            url: bodyfile[bx],
+            url: filelist[bx],
             type: "get",
             success: function(data){
                 var idname = data['id']
@@ -30,7 +54,9 @@ $(document).ready(function(){
             }
         })
     }
-})
+}
+
+
 
 function zxtCheart(data, cssselect){
     var date = new Array()

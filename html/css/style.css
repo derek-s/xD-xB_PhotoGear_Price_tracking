@@ -39,3 +39,13 @@ h1.navtitle {
     border: 1px solid #ddd;
     margin: 40px 0 40px 0;
 }
+.footbar{
+    padding: 30px 0 30px 0;
+    text-align: center;
+}
+.fbarspan {
+    color: #777;
+}
+.smallinfo {
+    margin-left: 10px;
+}
