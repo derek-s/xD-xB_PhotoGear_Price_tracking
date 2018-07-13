@@ -7,6 +7,7 @@ $(document).ready(function(){
     $.ajax({
         url: "date.json",
         type: "get",
+        cache: false,
         success: function(data){
             updatetime = data["update"]
             $(".lastupdate").text(updatetime)
@@ -42,6 +43,7 @@ function loadjson(filelist) {
         $.ajax({
             url: filelist[bx],
             type: "get",
+            cache: false,
             success: function(data){
                 var idname = data['id']
                 trackdata = $("div.trackdata")
