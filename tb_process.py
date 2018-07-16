@@ -27,19 +27,19 @@ def tb_json_process(jsondata, sku):
             return jsondata["data"]["originalPrice"][each_key]["price"]
 
 
-def json_write(fname, lens_name, shop_id, shop_name, date, price):
-
+def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
     filename = fname
-
     with codecs.open(filename, "a+", encoding="utf-8") as file_json:
         if not os.path.getsize(filename):
             result_json = {
                 "lensName": lens_name,
+                "id": str(fname).split(".")[0],
                 "sub": {
                     shop_id: {
                         "shop_title": shop_name,
                         "price": [
                             {
+                                "shop_title": shop_name,
                                 "date": date,
                                 "price": price
                             }
@@ -51,6 +51,7 @@ def json_write(fname, lens_name, shop_id, shop_name, date, price):
             file_json.seek(0)
             result_json = json.load(file_json, encoding="utf-8")
             new_price = {
+                "shop_title": shop_name,
                 "date": date,
                 "price": price
             }
@@ -61,6 +62,7 @@ def json_write(fname, lens_name, shop_id, shop_name, date, price):
                         "shop_title": shop_name,
                         "price": [
                             {
+                                "shop_title": shop_name,
                                 "date": date,
                                 "price": price
                             }
@@ -86,6 +88,6 @@ with codecs.open("tb_id.txt", "r", encoding="utf-8") as tbtxt:
         tb_json = tb_json_request(id)
         tb_price = tb_json_process(tb_json, sku)
         date = arrow.now().format("YYYY-MM-DD")
-        json_write(filename, lensName, shopID, shopName, date, tb_price)
+        json_write(filename, lensName, shopID, shopName, date, tb_price, id)
 
 
