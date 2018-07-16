@@ -8,8 +8,8 @@
 from jd_request import jd_request
 from jd_json_process import json_process
 from jd_soup import jd_page_procee
-import codecs
-
+import codecs, time
+from tb_process import tb_main
 
 if __name__ == "__main__":
     jd_r = jd_request()
@@ -22,4 +22,6 @@ if __name__ == "__main__":
         title = jd_soup.jd_title(product_page)
         price = jd_json_p.jd_json_price(price_result)
         jd_json_p.json_write(id, title, price)
+        time.sleep(15)
+    tb_main()
     jd_json_p.dateJson_write()

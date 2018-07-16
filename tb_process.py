@@ -28,7 +28,7 @@ def tb_json_process(jsondata, sku):
 
 
 def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
-    filename = fname
+    filename = "/home/jd_price_tracing/" + fname
     with codecs.open(filename, "a+", encoding="utf-8") as file_json:
         if not os.path.getsize(filename):
             result_json = {
@@ -74,20 +74,22 @@ def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
         json.dump(result_json, file_json, ensure_ascii=False)
 
 
-with codecs.open("tb_id.txt", "r", encoding="utf-8") as tbtxt:
-    tb_id = tbtxt.readlines()
-    for each_id in tb_id:
-        idrow= each_id.split("\n")[0]
-        id_subitem = idrow.split(",")
-        id = id_subitem[0]
-        shopName = id_subitem[1]
-        sku = id_subitem[2]
-        lensName = id_subitem[3]
-        filename = id_subitem[4]
-        shopID = id_subitem[5]
-        tb_json = tb_json_request(id)
-        tb_price = tb_json_process(tb_json, sku)
-        date = arrow.now().format("YYYY-MM-DD")
-        json_write(filename, lensName, shopID, shopName, date, tb_price, id)
+def tb_main():
+    with codecs.open("/home/jd_price_tracing/tb_id.txt", "r", encoding="utf-8") as tbtxt:
+        tb_id = tbtxt.readlines()
+        for each_id in tb_id:
+            idrow= each_id.split("\n")[0]
+            id_subitem = idrow.split(",")
+            id = id_subitem[0]
+            shopName = id_subitem[1]
+            sku = id_subitem[2]
+            lensName = id_subitem[3]
+            filename = id_subitem[4]
+            shopID = id_subitem[5]
+            tb_json = tb_json_request(id)
+            tb_price = tb_json_process(tb_json, sku)
+            date = arrow.now().format("YYYY-MM-DD")
+            json_write(filename, lensName, shopID, shopName, date, tb_price, id)
+            time.sleep(15)
 
 
