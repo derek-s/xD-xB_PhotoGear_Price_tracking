@@ -26,7 +26,7 @@ $(document).ready(function(){
     $("a.clens").bind("click", function(){
         $(this).parent().attr("class", "active")
         $("a.cbody").parent().removeAttr("class")
-        $("a.userGear").parent().removeAttr("class")
+        $("a.usedGear").parent().removeAttr("class")
         $("div.trackdata").empty()
         $("h1.h1info").text("镜头价格追踪总览")
         $("h1.h1info").append('<small class="smallinfo">尼康、腾龙镜头</small>')
@@ -35,7 +35,7 @@ $(document).ready(function(){
     $("a.cbody").bind("click", function(){
         $(this).parent().attr("class", "active")
         $("a.clens").parent().removeAttr("class")
-        $("a.userGear").parent().removeAttr("class")
+        $("a.usedGear").parent().removeAttr("class")
         $("div.trackdata").empty()
         $("h1.h1info").text("机身价格追踪总览")
         $("h1.h1info").append('<small class="smallinfo">尼康全画幅机身</small>')
@@ -143,8 +143,6 @@ function zxtCheart(data, cssselect){
         purple: 'rgb(153, 102, 255)',
         grey: 'rgb(201, 203, 207)'
     }
-
-    console.log(typeof(window.chartColors))
 
     var config = {
         type: "line",
@@ -275,6 +273,5 @@ function randomColor(){
     ]
 
     var rColor = Colors[Math.round(Math.random() * 7)]
-    console.log(rColor)
     return rColor
 }
