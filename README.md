@@ -1,4 +1,4 @@
-# JD_Price_tracing
+# JD/TB_PhotoGear_Price_tracking
 
 X东/X宝 商品价格数据爬虫
 
@@ -58,7 +58,8 @@ requests, arrow, BeautifulSoup
 python main.py
 ```
 
-如果需要单独运行X东的，请注释 `main.py` 第 26 行
+需要单独运行X东的，请注释 `main.py` 第 26 行
+需要单独运行X宝的，请注释 `main.py` 第 15-25 行
 
 ## 前端显示
 
