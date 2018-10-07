@@ -34,6 +34,18 @@ X宝麻烦一点，X宝的商品id文件 `tb_id.txt`
 
 由于器材json文件名和店铺ID要用来在代码中使用，请使用全英文字符串。
 
+#### 2018-10-07 更新
+
+有一些淘宝店铺设置了普通价和店铺价，并标注为商品促销或其他说法。
+
+这一类的价格信息并不在请求得到的JSON数据中的 `originalPrice` 键下，而是在 `promotion` 键下。
+
+于是这一次更新了请求地址，加上了 `xmpPromotion` 选项。
+
+同时修改 `tb_process.py` 文件，适配了差异。
+
+`tb_json_process(tb_json, sku, "origin")` 第三个参数设置为 `origin` 时为普通价格，设置为 `promotion` 时为促销价格。
+
 ### 环境及运行方法
 
 #### 依赖库及Python版本
