@@ -14,17 +14,31 @@ def tb_json_request(id):
         "Referer": "https://item.taobao.com/item.htm?id=" + id
     }
 
-    url = "https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId=" + id + "&sellerId=186121147&modules=originalPrice"
-
-    r = requests.get(url, headers=headers)
+    url = "https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId=" + id + "&sellerId=186121147&modules=xmpPromotion,originalPrice"
+    fails = 0
+    while fails <= 30:
+        try:
+            r = requests.get(url, headers=headers, timeout=15)
+            break
+        except:
+            fails += 1
     return r.json()
 
 
-def tb_json_process(jsondata, sku):
-    jsonKeys = jsondata["data"]["originalPrice"].keys()
-    for each_key in jsonKeys:
-        if sku in each_key:
-            return jsondata["data"]["originalPrice"][each_key]["price"]
+def tb_json_process(jsondata, sku, options):
+    if options == "promotion":
+        jsons = jsondata["data"]["promotion"]["promoData"]
+        jsonKeys = jsons.keys()
+        for each_key in jsonKeys:
+            if sku in each_key:
+                return jsons[each_key][0]["price"]
+    elif options == "origin":
+        jsons = jsondata["data"]["originalPrice"]
+        jsonKeys = jsons.keys()
+        for each_key in jsonKeys:
+            if sku in each_key:
+                print(jsons[each_key]["price"])
+                return jsons[each_key]["price"]
 
 
 def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
@@ -87,9 +101,27 @@ def tb_main():
             filename = id_subitem[4]
             shopID = id_subitem[5]
             tb_json = tb_json_request(id)
-            tb_price = tb_json_process(tb_json, sku)
+            tb_price = tb_json_process(tb_json, sku, "origin")
             date = arrow.now().format("YYYY-MM-DD")
             json_write(filename, lensName, shopID, shopName, date, tb_price, id)
             time.sleep(15)
+    
+    with codecs.open("/home/jd_price_tracing/wb_id.txt", "r", encoding="utf-8") as tbtxt:
+        tb_id = tbtxt.readlines()
+        for each_id in tb_id:
+            idrow= each_id.split("\n")[0]
+            id_subitem = idrow.split(",")
+            id = id_subitem[0]
+            shopName = id_subitem[1]
+            sku = id_subitem[2]
+            lensName = id_subitem[3]
+            filename = id_subitem[4]
+            shopID = id_subitem[5]
+            tb_json = tb_json_request(id)
+            tb_price = tb_json_process(tb_json, sku, "promotion")
+            date = arrow.now().format("YYYY-MM-DD")
+            json_write(filename, lensName, shopID, shopName, date, tb_price, id)
+            time.sleep(15)
+
 
 
