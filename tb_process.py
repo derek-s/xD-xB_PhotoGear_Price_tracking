@@ -26,23 +26,28 @@ def tb_json_request(id):
 
 
 def tb_json_process(jsondata, sku, options):
+    flagPromotion = True
+    flagOrigin = True
     if options == "promotion":
         jsons = jsondata["data"]["promotion"]["promoData"]
         jsonKeys = jsons.keys()
         for each_key in jsonKeys:
             if sku in each_key:
+                flagPromotion = True;
                 return jsons[each_key][0]["price"]
             else:
-                return "0.00"
+                flagPromotion = False
     elif options == "origin":
         jsons = jsondata["data"]["originalPrice"]
         jsonKeys = jsons.keys()
         for each_key in jsonKeys:
             if sku in each_key:
-                print(jsons[each_key]["price"])
+                flagOrigin = True
                 return jsons[each_key]["price"]
             else:
-                return "0.00"
+                flagOrigin = False;
+    if(not (flagPromotion and flagOrigin)):
+        return "0.00"
 
 
 def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
