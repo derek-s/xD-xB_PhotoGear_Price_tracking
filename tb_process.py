@@ -32,6 +32,8 @@ def tb_json_process(jsondata, sku, options):
         for each_key in jsonKeys:
             if sku in each_key:
                 return jsons[each_key][0]["price"]
+            else:
+                return "0.00"
     elif options == "origin":
         jsons = jsondata["data"]["originalPrice"]
         jsonKeys = jsons.keys()
@@ -39,6 +41,8 @@ def tb_json_process(jsondata, sku, options):
             if sku in each_key:
                 print(jsons[each_key]["price"])
                 return jsons[each_key]["price"]
+            else:
+                return "0.00"
 
 
 def json_write(fname, lens_name, shop_id, shop_name, date, price, id):
