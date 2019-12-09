@@ -1,6 +1,6 @@
-# JD/TB_PhotoGear_Price_tracking
+# xD/xB_PhotoGear_Price_tracking
 
-X东/X宝 商品价格数据爬虫
+商品价格数据爬虫
 
 经常在无忌看贴，发现每当新摄影器材出现，有兴趣的人总会开一个价格追踪贴，收集互联网电商以及器材城销售商的价格，但当器材价格平稳之后便无人再做更新。
 
